@@ -7,16 +7,13 @@ router.post("/Analizador", async (req, res) => {
     console.log(req.body);
 
     let resultado = parser.parse(req.body.text);
-    console.log();
+    console.log("El resultado es:" , resultado);
 
-    if(!resultado){
-        console.log("Error en el analisis");
-    }else{
-        console.log("Analisis exitoso");
-    }
-    res.send(req.body)
+
+    res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: "aqui va la tabla de simbolos"});
     // console.log(id_user.id_usuario_logueado)
   })
   
+
 
 module.exports = router;

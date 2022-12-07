@@ -33,6 +33,11 @@
 .                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
 
+%{
+	const Errores = require('./errores.js');
+	var errorcitos = new Errores();
+%}
+
 /* Asociación de operadores y precedencia */
 
 %left 'MAS' 'MENOS'
@@ -44,13 +49,17 @@
 %% /* Definición de la gramática */
 
 ini
-	: instrucciones EOF
+	: instrucciones EOF {
+		return errorcitos;
+	}
 ;
 
 instrucciones
 	: instruccion instrucciones
 	| instruccion
-	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); }
+	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+			  errorcitos.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
+			}
 ;
 
 instruccion
