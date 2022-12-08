@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch services --watch config  --watch index.js "
+    "dev": "nodemon --watch services --watch config  --watch index.js --watch analizador"
   },
   "repository": {
     "type": "git",

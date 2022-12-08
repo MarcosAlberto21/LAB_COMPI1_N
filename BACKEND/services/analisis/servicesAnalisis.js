@@ -10,7 +10,7 @@ router.post("/Analizador", async (req, res) => {
     console.log("El resultado es:" , resultado);
 
 
-    res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: "aqui va la tabla de simbolos"});
+    res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: resultado.getSimbolos()});
     // console.log(id_user.id_usuario_logueado)
   })
   

@@ -1,7 +1,7 @@
 const tipo = require("./tipo");
 
 
-class Errores {
+class Reportes {
 
     constructor(){
         this.clearAll();
@@ -12,6 +12,7 @@ class Errores {
          * lo usamos para instanciar y a la vez para limpiar
          *  */
         this.errores_sintacticos = [];
+        this.reporte_simbolos = [];
     }
 
     getErrores_sintacticos(){
@@ -24,7 +25,16 @@ class Errores {
     }
 
 
+    getSimbolos(){
+        return this.reporte_simbolos;
+    }
+
+    putSimbolo(body){
+        this.reporte_simbolos.push(body)
+    }
+
+
 }
 
 
-module.exports = Errores;
+module.exports = Reportes;

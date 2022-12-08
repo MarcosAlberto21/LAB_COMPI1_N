@@ -1,6 +1,11 @@
 const tipo = {
     LEXICO: 'LEXICO',
-    SINTACTICO: 'SINTACTICO'
+    SINTACTICO: 'SINTACTICO',
+    ENTERO: 'ENTERO',
+    STRING: 'STRING',
+    BOOLEANO: 'BOOLEANO',
+    VARIABLE: 'VARIABLE',
+    DOUBLE: 'DOUBLE',
 }
 
 module.exports = tipo;
