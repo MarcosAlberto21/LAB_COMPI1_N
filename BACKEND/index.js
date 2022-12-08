@@ -16,7 +16,7 @@ app.use(cors())
 
 //settings
 let port = 9000;
-let ip = "172.22.1.51";
+let ip = "127.0.0.1";
 app.listen(port,ip);
 app.use(express.json()) 
 

@@ -57,7 +57,7 @@ ini
 instrucciones
 	: instruccion instrucciones
 	| instruccion
-	| error { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+	| error instruccion { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
 			  errorcitos.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
 			}
 ;
