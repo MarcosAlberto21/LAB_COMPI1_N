@@ -88,10 +88,8 @@
 
 ini
 	: instrucciones EOF {
-			console.log("llego aqui" , $1)
-
+		
 		  for(var i = 0; i< $1.length; i++){
-			console.log("que pedo" ,$1[i] )
             if($1[i])
                 $1[i].operar(tabla_simbolo, reportes)
         }
@@ -110,9 +108,9 @@ instrucciones
 
 instruccion
 	: DECLARACION PTCOMA  {  console.log("Paso a aqui 2", $1); if($1 != null){$$ = $1}}
-	| REVALUAR CORIZQ expresion CORDER PTCOMA {
-		console.log('El valor de la expresión es: ' + $3);
-	}
+	// | REVALUAR CORIZQ expresion CORDER PTCOMA {
+	// 	console.log('El valor de la expresión es: ' + $3);
+	// }
 ;
 
 DECLARACION

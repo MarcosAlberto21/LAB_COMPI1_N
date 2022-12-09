@@ -19,8 +19,8 @@ class Declaration {
 
     operar(tabla_simbolos,reportes) {
         
-        let a = tabla_simbolos.existsDirect(this._identificador);        
-        if (a === false) {
+        // let a = tabla_simbolos.existsDirect(this._identificador);        
+        // if (a === false) {
             /**
              * Si la variable aun no ha sido declarado en el ambito actual entonces se procede a crear
              * el simbolo nuevo he insertarlo en la tabla_simbolosla de simbolos
@@ -31,11 +31,11 @@ class Declaration {
              */
              reportes.putSimbolo(new Symbol(this.identificador, this.tipo_dato, this.token,this.lexema, this.valor, this.fila,this.columna));
             return true;
-        }else{
-            console.log("el dato ya existe en la tabla de simbolos");
-        }
+        // }else{
+        //     console.log("el dato ya existe en la tabla de simbolos");
+        // }
 
-        return null;
+        // return null;
     }
 
 
