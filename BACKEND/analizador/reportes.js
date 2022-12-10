@@ -12,6 +12,7 @@ class Reportes {
          * lo usamos para instanciar y a la vez para limpiar
          *  */
         this.errores_sintacticos = [];
+        this.errores_lexicos = [];
         this.reporte_simbolos = [];
     }
 
