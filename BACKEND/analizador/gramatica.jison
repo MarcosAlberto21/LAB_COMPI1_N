@@ -1,139 +1,84 @@
-/**
- * Ejemplo mi primer proyecto con Jison utilizando Nodejs en Ubuntu
- */
-
-/* Definición Léxica */
+/*------------------------------------------------IMPORTACIONES----------------------------------------------*/
+%{
+    const Nodo=require('./nodo_arbol');
+%}
 %lex
-
 %options case-insensitive
-
 %%
 
-"Evaluar"           return 'REVALUAR';
-";"                 return 'PTCOMA';
-"("                 return 'PARIZQ';
-")"                 return 'PARDER';
-"["                 return 'CORIZQ';
-"]"                 return 'CORDER';
-
-"+"                 return 'MAS';
-"-"                 return 'MENOS';
-"*"                 return 'POR';
-"/"                 return 'DIVIDIDO';
-
-
-//Reservadas
-"null"                  return 'resnull';
-"integer"               return 'resinteger';
-"double"                return 'resdouble';
-"char"                  return 'reschar';
-"string"                return 'resstring';
-"true"                  return 'restrue';
-"false"                 return 'resfalse';
-"if"                    return 'resif';
-"else"                  return 'reselse';
-"print"                 return 'resprint';
-"for"                   return 'resfor';
-"while"                 return 'reswhile';
-"do"                    return 'resdo';
-"boolean"               return 'resboolean';
-"void"                  return 'resvoid';
+"EXPRESION"         %{ return 'tk_expresion';%}
+[0-9]+("."[0-9])?\b            %{  return 'tk_decimal';  %}
+"["                 %{  return 'tk_ca';  %}
+"]"                 %{  return 'tk_cc';  %}
+"+"                 %{ return 'tk_mas'; %}
+"-"                 %{ return 'tk_menos';%}
+"*"                 %{ return 'tk_multiplicar';%}
+"/"                 %{ return 'tk_division'%}
+"("                 %{  return 'tk_pa';  %}
+")"                 %{  return 'tk_pc';  %}
+";"                 %{  return 'tk_punto_coma';  %}
 
 
-//simbolos
-"{"              return 'corchetea';     
-"}"              return 'corchetec';
-"("              return 'parenta';     
-")"              return 'parentc';
-","              return 'coma';
-"."              return 'punto';
-"="              return 'igual';
 
+[ \t\r\n\f]+         { /*se ignoran*/ }
 
-([a-zA-Z"_"])[a-z0-9A-Z"_""ñ""Ñ"]*       return 'id';
+<<EOF>>     {  return 'EOF';   }
 
+.	       { console.log('Error Lexico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+  
 
-/* Espacios en blanco */
-[ \r\t]+                  {}
-\n                        {}
-
-[0-9]+("."[0-9]+)?\b    return 'DECIMAL';
-[0-9]+\b                return 'ENTERO';
-
-<<EOF>>                 return 'EOF';
-
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 /lex
 
-%{
-	const Reportes = require('./reportes.js');
-	const Declaracion = require('./Declaracion.js');
-	const SymbolTable = require('./tabla_simbolos.js');
-	const Type = require('./tipo.js')
-	var reportes = new Reportes();
-	var tabla_simbolo = new SymbolTable(null);
-	tabla_simbolo.reportes = reportes;
+%left tk_mas tk_menos
+%left tk_multiplicar tk_division
+%left tk_pa tk_pc
 
-%}
+%start INICIO
+%% 
 
-/* Asociación de operadores y precedencia */
+INICIO: LEXPRESION EOF { $$= new Nodo("INICIO","");
+     $$.agregarHijo($1);
+     return $$;
+    };
 
-%left 'MAS' 'MENOS'
-%left 'POR' 'DIVIDIDO'
-%left UMENOS
+LEXPRESION: LEXPRESION EXPRESION {$$= new Nodo("LEXPRESION","");
+                                    $$.agregarHijo($1);
+                                    $$.agregarHijo($2);
+                                }
+    | EXPRESION { $$= new Nodo("LEXPRESION","");
+                $$.agregarHijo($1);
+    };
 
-%start ini
+EXPRESION: tk_expresion tk_ca E tk_cc tk_punto_coma { $$ = new Nodo("EXPRESION","");
+                                                    $$.agregarHijo(new Nodo("expresion","expresion"));
+                                                    $$.agregarHijo($3);
+    }
+    | error tk_punto_coma {console.log("Error sintactico en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);};
 
-%% /* Definición de la gramática */
-
-ini
-	: instrucciones EOF {
-			console.log("llego aqui" , $1)
-
-		  for(var i = 0; i< $1.length; i++){
-			console.log("que pedo" ,$1[i] )
-            if($1[i])
-                $1[i].operar(tabla_simbolo, reportes)
-        }
-
-		return reportes;
-	}
-;
-
-instrucciones
-	: instrucciones  instruccion  {$$ = $1; $$.push($2);}
-	| instruccion  {$$ = []; $$.push($1)}
-	| error instruccion { console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
-			  reportes.putError_sintactico({lexema:yytext, fila: this._$.first_line, columna:this._$.first_column })
-			}
-;
-
-instruccion
-	: DECLARACION PTCOMA  {  console.log("Paso a aqui 2", $1); if($1 != null){$$ = $1}}
-	| REVALUAR CORIZQ expresion CORDER PTCOMA {
-		console.log('El valor de la expresión es: ' + $3);
-	}
-;
-
-DECLARACION
-     : TYPE id igual expresion { console.log("Paso a aqui", $1); $$ = new Declaracion($2,$1,Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column);}
-;
-
-expresion
-	: MENOS expresion %prec UMENOS  { $$ = $2 *-1; }
-	| expresion MAS expresion       { $$ = $1 + $3; }
-	| expresion MENOS expresion     { $$ = $1 - $3; }
-	| expresion POR expresion       { $$ = $1 * $3; }
-	| expresion DIVIDIDO expresion  { $$ = $1 / $3; }
-	| ENTERO                        { $$ = Number($1); }
-	| DECIMAL                       { $$ = Number($1); }
-	| PARIZQ expresion PARDER       { $$ = $2; }
-;
-
-
-TYPE
-     : resinteger {$$ = Type.ENTERO}
-     | resdouble {$$ = Type.DOUBLE}
-     | resboolean {$$ = Type.BOOLEANO}
-     | resstring {$$ = Type.STRING}
-;
+E: E tk_mas E { $$ = new Nodo("E","");
+                        $$.agregarHijo($1);
+                        $$.agregarHijo(new Nodo("+","suma"));
+                        $$.agregarHijo($3);
+                        }
+    | E tk_menos E { $$ = new Nodo("E","");
+                        $$.agregarHijo($1);
+                        $$.agregarHijo(new Nodo("-","resta"));
+                        $$.agregarHijo($3);
+                        }
+    | E tk_multiplicar E { $$ = new Nodo("E","");
+                        $$.agregarHijo($1);
+                        $$.agregarHijo(new Nodo("*","multiplicar"));
+                        $$.agregarHijo($3);
+                        }
+    | E tk_division E { $$ = new Nodo("E","");
+                        $$.agregarHijo($1);
+                        $$.agregarHijo(new Nodo("/","division"));
+                        $$.agregarHijo($3);
+                        }
+    | tk_pa E tk_pc { $$ = new Nodo("E", "");
+                        $$.agregarHijo($2);
+                    }
+    | tk_pa error tk_pc {console.log("Error sintactico en: "+ $1 +"ERROR" +$3+ " en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);}
+    | tk_decimal { $$ = new Nodo("E","");
+                   $$.agregarHijo(new Nodo($1,"decimal"));
+                   };
