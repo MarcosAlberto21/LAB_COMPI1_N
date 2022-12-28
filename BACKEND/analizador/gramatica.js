@@ -72,43 +72,22 @@
   }
 */
 var gramatica = (function(){
-<<<<<<< HEAD
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,4],$V2=[2,5,7],$V3=[1,11],$V4=[1,12],$V5=[1,14],$V6=[1,15],$V7=[1,16],$V8=[1,17],$V9=[10,12,13,14,15,17],$Va=[10,12,13,17];
 var parser = {trace: function trace () { },
 yy: {},
 symbols_: {"error":2,"INICIO":3,"LEXPRESION":4,"EOF":5,"EXPRESION":6,"tk_expresion":7,"tk_ca":8,"E":9,"tk_cc":10,"tk_punto_coma":11,"tk_mas":12,"tk_menos":13,"tk_multiplicar":14,"tk_division":15,"tk_pa":16,"tk_pc":17,"tk_decimal":18,"$accept":0,"$end":1},
 terminals_: {2:"error",5:"EOF",7:"tk_expresion",8:"tk_ca",10:"tk_cc",11:"tk_punto_coma",12:"tk_mas",13:"tk_menos",14:"tk_multiplicar",15:"tk_division",16:"tk_pa",17:"tk_pc",18:"tk_decimal"},
 productions_: [0,[3,2],[4,2],[4,1],[6,5],[6,2],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,1]],
-=======
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,7],$V1=[1,8],$V2=[1,9],$V3=[1,10],$V4=[5,21,22,23,24],$V5=[1,18],$V6=[1,19],$V7=[1,20],$V8=[1,21],$V9=[1,23],$Va=[1,22],$Vb=[1,24],$Vc=[1,25],$Vd=[8,13,14,15,16,20],$Ve=[8,13,14,20];
-var parser = {trace: function trace () { },
-yy: {},
-symbols_: {"error":2,"ini":3,"instrucciones":4,"EOF":5,"instruccion":6,"DECLARACION":7,"PTCOMA":8,"TYPE":9,"id":10,"igual":11,"expresion":12,"MENOS":13,"MAS":14,"POR":15,"DIVIDIDO":16,"ENTERO":17,"DECIMAL":18,"PARIZQ":19,"PARDER":20,"resinteger":21,"resdouble":22,"resboolean":23,"resstring":24,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"PTCOMA",10:"id",11:"igual",13:"MENOS",14:"MAS",15:"POR",16:"DIVIDIDO",17:"ENTERO",18:"DECIMAL",19:"PARIZQ",20:"PARDER",21:"resinteger",22:"resdouble",23:"resboolean",24:"resstring"},
-productions_: [0,[3,2],[4,2],[4,1],[4,2],[6,2],[7,4],[12,2],[12,3],[12,3],[12,3],[12,3],[12,1],[12,1],[12,3],[9,1],[9,1],[9,1],[9,1]],
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
-<<<<<<< HEAD
  this.$= new Nodo("INICIO","");
      this.$.agregarHijo($$[$0-1]);
      return this.$;
     
-=======
-
-		
-		  for(var i = 0; i< $$[$0-1].length; i++){
-            if($$[$0-1][i])
-                $$[$0-1][i].operar(tabla_simbolo, reportes)
-        }
-
-		return reportes;
-	
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 break;
 case 2:
 this.$= new Nodo("LEXPRESION","");
@@ -131,7 +110,6 @@ case 5:
 console.log("Error sintactico en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);
 break;
 case 6:
-<<<<<<< HEAD
  this.$ = new Nodo("E","");
                         this.$.agregarHijo($$[$0-2]);
                         this.$.agregarHijo(new Nodo("+","suma"));
@@ -176,47 +154,6 @@ break;
 },
 table: [{2:$V0,3:1,4:2,6:3,7:$V1},{1:[3]},{2:$V0,5:[1,6],6:7,7:$V1},o($V2,[2,3]),{8:[1,8]},{11:[1,9]},{1:[2,1]},o($V2,[2,2]),{9:10,16:$V3,18:$V4},o($V2,[2,5]),{10:[1,13],12:$V5,13:$V6,14:$V7,15:$V8},{2:[1,19],9:18,16:$V3,18:$V4},o($V9,[2,12]),{11:[1,20]},{9:21,16:$V3,18:$V4},{9:22,16:$V3,18:$V4},{9:23,16:$V3,18:$V4},{9:24,16:$V3,18:$V4},{12:$V5,13:$V6,14:$V7,15:$V8,17:[1,25]},{17:[1,26]},o($V2,[2,4]),o($Va,[2,6],{14:$V7,15:$V8}),o($Va,[2,7],{14:$V7,15:$V8}),o($V9,[2,8]),o($V9,[2,9]),o($V9,[2,10]),o($V9,[2,11])],
 defaultActions: {6:[2,1]},
-=======
- console.log("Paso a aqui", $$[$0-3]); this.$ = new Declaracion($$[$0-2],$$[$0-3],Type.VARIABLE,Type.VARIABLE, 'RESOLVER EXPRESION' ,this._$.first_line,this._$.first_column);
-break;
-case 7:
- this.$ = $$[$0] *-1; 
-break;
-case 8:
- this.$ = $$[$0-2] + $$[$0]; 
-break;
-case 9:
- this.$ = $$[$0-2] - $$[$0]; 
-break;
-case 10:
- this.$ = $$[$0-2] * $$[$0]; 
-break;
-case 11:
- this.$ = $$[$0-2] / $$[$0]; 
-break;
-case 12: case 13:
- this.$ = Number($$[$0]); 
-break;
-case 14:
- this.$ = $$[$0-1]; 
-break;
-case 15:
-this.$ = Type.ENTERO
-break;
-case 16:
-this.$ = Type.DOUBLE
-break;
-case 17:
-this.$ = Type.BOOLEANO
-break;
-case 18:
-this.$ = Type.STRING
-break;
-}
-},
-table: [{2:[1,4],3:1,4:2,6:3,7:5,9:6,21:$V0,22:$V1,23:$V2,24:$V3},{1:[3]},{5:[1,11],6:12,7:5,9:6,21:$V0,22:$V1,23:$V2,24:$V3},o($V4,[2,3]),{6:13,7:5,9:6,21:$V0,22:$V1,23:$V2,24:$V3},{8:[1,14]},{10:[1,15]},{10:[2,15]},{10:[2,16]},{10:[2,17]},{10:[2,18]},{1:[2,1]},o($V4,[2,2]),o($V4,[2,4]),o($V4,[2,5]),{11:[1,16]},{12:17,13:$V5,17:$V6,18:$V7,19:$V8},{8:[2,6],13:$V9,14:$Va,15:$Vb,16:$Vc},{12:26,13:$V5,17:$V6,18:$V7,19:$V8},o($Vd,[2,12]),o($Vd,[2,13]),{12:27,13:$V5,17:$V6,18:$V7,19:$V8},{12:28,13:$V5,17:$V6,18:$V7,19:$V8},{12:29,13:$V5,17:$V6,18:$V7,19:$V8},{12:30,13:$V5,17:$V6,18:$V7,19:$V8},{12:31,13:$V5,17:$V6,18:$V7,19:$V8},o($Vd,[2,7]),{13:$V9,14:$Va,15:$Vb,16:$Vc,20:[1,32]},o($Ve,[2,8],{15:$Vb,16:$Vc}),o($Ve,[2,9],{15:$Vb,16:$Vc}),o($Vd,[2,10]),o($Vd,[2,11]),o($Vd,[2,14])],
-defaultActions: {7:[2,15],8:[2,16],9:[2,17],10:[2,18],11:[2,1]},
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -794,61 +731,7 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-<<<<<<< HEAD
 case 0: return 7;
-=======
-case 0:return 'REVALUAR';
-break;
-case 1:return 8;
-break;
-case 2:return 19;
-break;
-case 3:return 20;
-break;
-case 4:return 'CORIZQ';
-break;
-case 5:return 'CORDER';
-break;
-case 6:return 14;
-break;
-case 7:return 13;
-break;
-case 8:return 15;
-break;
-case 9:return 16;
-break;
-case 10:return 'resnull';
-break;
-case 11:return 21;
-break;
-case 12:return 22;
-break;
-case 13:return 'reschar';
-break;
-case 14:return 24;
-break;
-case 15:return 'restrue';
-break;
-case 16:return 'resfalse';
-break;
-case 17:return 'resif';
-break;
-case 18:return 'reselse';
-break;
-case 19:return 'resprint';
-break;
-case 20:return 'resfor';
-break;
-case 21:return 'reswhile';
-break;
-case 22:return 'resdo';
-break;
-case 23:return 23;
-break;
-case 24:return 'resvoid';
-break;
-case 25:return 'corchetea';     
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 break;
 case 1:  return 18;  
 break;
@@ -860,29 +743,17 @@ case 4: return 12;
 break;
 case 5: return 13;
 break;
-<<<<<<< HEAD
 case 6: return 14;
 break;
 case 7: return 15
-=======
-case 31:return 11;
-break;
-case 32:return 10;
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 break;
 case 8:  return 16;  
 break;
 case 9:  return 17;  
 break;
-<<<<<<< HEAD
 case 10:  return 11;  
 break;
 case 11: /*se ignoran*/ 
-=======
-case 35:return 18;
-break;
-case 36:return 17;
->>>>>>> 20e6801027ba53f7b0b3b552968a8aca3a220da1
 break;
 case 12:  return 5;   
 break;
