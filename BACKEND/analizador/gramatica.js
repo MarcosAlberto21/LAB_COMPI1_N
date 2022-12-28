@@ -92,62 +92,62 @@ break;
 case 2:
 this.$= new Nodo("LEXPRESION","");
                                     this.$.agregarHijo($$[$0-1]);
-                                    this.$.agregarHijo($$[$0]);
+                                    var expre =  new Nodo("EXPRESION","");
+                                    expre.agregarHijo($$[$0])
+                                    this.$.agregarHijo(expre);
                                 
 break;
 case 3:
- this.$= new Nodo("LEXPRESION","");
-                this.$.agregarHijo($$[$0]);
+ 
+        this.$= new Nodo("EXPRESION","");
+        this.$.agregarHijo($$[$0]);
+               
     
 break;
 case 4:
- this.$ = new Nodo("EXPRESION","");
-                                                    this.$.agregarHijo(new Nodo("expresion","expresion"));
-                                                    this.$.agregarHijo($$[$0-2]);
+ this.$ = $$[$0-2]
+                                                 
+                                                   
     
 break;
 case 5:
 console.log("Error sintactico en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);
 break;
 case 6:
- this.$ = new Nodo("E","");
+ this.$ = new Nodo("+","suma");
                         this.$.agregarHijo($$[$0-2]);
-                        this.$.agregarHijo(new Nodo("+","suma"));
                         this.$.agregarHijo($$[$0]);
                         
 break;
 case 7:
- this.$ = new Nodo("E","");
+ this.$ = new Nodo("-","resta")
                         this.$.agregarHijo($$[$0-2]);
-                        this.$.agregarHijo(new Nodo("-","resta"));
                         this.$.agregarHijo($$[$0]);
                         
 break;
 case 8:
- this.$ = new Nodo("E","");
+ this.$ = new Nodo("*","multiplicar")
                         this.$.agregarHijo($$[$0-2]);
-                        this.$.agregarHijo(new Nodo("*","multiplicar"));
                         this.$.agregarHijo($$[$0]);
                         
 break;
 case 9:
- this.$ = new Nodo("E","");
+ this.$ = new Nodo("/","division")
                         this.$.agregarHijo($$[$0-2]);
-                        this.$.agregarHijo(new Nodo("/","division"));
                         this.$.agregarHijo($$[$0]);
                         
 break;
 case 10:
- this.$ = new Nodo("E", "");
-                        this.$.agregarHijo($$[$0-1]);
+ this.$ = $$[$0-1]
+                     
                     
 break;
 case 11:
 console.log("Error sintactico en: "+ $$[$0-2] +"ERROR" +$$[$0]+ " en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);
 break;
 case 12:
- this.$ = new Nodo("E","");
-                   this.$.agregarHijo(new Nodo($$[$0],"decimal"));
+ this.$ = new Nodo($$[$0],"decimal");
+                 
                    
 break;
 }
