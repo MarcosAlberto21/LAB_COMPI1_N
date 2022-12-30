@@ -1,13 +1,18 @@
 const { Router, json } = require('express');
 const router = Router();
 const parser = require('../../analizador/gramatica') 
+const tabla_simbolos = require("../../analizador/tabla_simbolos");
+const Simbolo = require('../../analizador/simbolo.js');
 
 let id_n = 1;
 let salida_dot="";
+let tabla = new tabla_simbolos(null);
 router.post("/Analizador", async (req, res) => {
-    console.log("prueba");
     salida_dot = "";
     id_n = 1;
+
+    tabla = new tabla_simbolos(null);
+
     console.log(req.body);
 
     let raiz = parser.parse(req.body.text);
@@ -15,9 +20,9 @@ router.post("/Analizador", async (req, res) => {
     recorrer_arbol(raiz);
     recorrer_arbol_para_analisis(raiz);
 
-    // res.send({errores_sintacticos:resultado.getErrores_sintacticos(), tabla_simbolos: resultado.getSimbolos()});
+    imprimir_tabla(tabla);
+   
     res.send({raiz:salida_dot})
-    // console.log(id_user.id_usuario_logueado)
   })
 
 
@@ -38,17 +43,15 @@ function recorrer_arbol(nodo){
 }
 
 function recorrer_arbol_para_analisis(nodo){
-
-
   if(nodo.valor == 'LEXPRESION'){
-    console.log("Encontré una lista de expresiones");
+    // console.log("Encontré una lista de expresiones");
   }else if(nodo.valor == 'EXPRESION'){
-    console.log("tengo que analizar esta expresion");
+    // console.log("tengo que analizar esta expresion");
     var calculo = analizar_expresion(nodo.hijos[0]);
-    console.log("El resulta de la expresion es: " + calculo);
-  
+    // console.log("El resulta de la expresion es: " + calculo);
+  }else if(nodo.valor == 'DECLARACION'){
+    ejecutar_declaracion(nodo.hijos[0], nodo.hijos[1], nodo.hijos[2].hijos[0], 1,2);
   }
-
 
   nodo.hijos.forEach(element => {
     // salida_dot = salida_dot + `${nodo.id} -> ${id_n} ;`
@@ -59,7 +62,7 @@ function recorrer_arbol_para_analisis(nodo){
 }
 
 function analizar_expresion(expresion){
-  console.log("lista para analizar",expresion.valor);
+  // console.log("lista para analizar",expresion.valor);
 
   var respuesta = null;
 
@@ -98,5 +101,17 @@ function analizar_expresion(expresion){
 }
 
 
+function ejecutar_declaracion(tipo, id, expresion, fila, columna){
+  let r = tabla.addSymbol(new Simbolo(id.valor,tipo.valor, "variable","indentificador", analizar_expresion(expresion) , fila, columna));
+  // console.log("respuesta del simbolo", r);
+
+  if(!r){
+    console.log("ERROR SEMANTICO LA VARIABLE " + id.valor + " YA EXISTE " + fila + " " + columna);
+  }
+}
+
+function imprimir_tabla(ts){
+  console.log(ts);
+}
 
 module.exports = router;

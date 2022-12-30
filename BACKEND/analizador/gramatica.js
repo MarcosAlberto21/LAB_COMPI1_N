@@ -72,12 +72,12 @@
   }
 */
 var gramatica = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,5],$V1=[1,4],$V2=[2,5,7],$V3=[1,11],$V4=[1,12],$V5=[1,14],$V6=[1,15],$V7=[1,16],$V8=[1,17],$V9=[10,12,13,14,15,17],$Va=[10,12,13,17];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,6],$V1=[1,7],$V2=[1,8],$V3=[1,9],$V4=[5,13,14,15,16],$V5=[1,18],$V6=[1,19],$V7=[1,20],$V8=[2,8,23,25],$V9=[1,22],$Va=[1,23],$Vb=[1,24],$Vc=[1,25],$Vd=[2,8,19,20,21,22,23,24,25],$Ve=[2,8,19,20,23,24,25];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"INICIO":3,"LEXPRESION":4,"EOF":5,"EXPRESION":6,"tk_expresion":7,"tk_ca":8,"E":9,"tk_cc":10,"tk_punto_coma":11,"tk_mas":12,"tk_menos":13,"tk_multiplicar":14,"tk_division":15,"tk_pa":16,"tk_pc":17,"tk_decimal":18,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"tk_expresion",8:"tk_ca",10:"tk_cc",11:"tk_punto_coma",12:"tk_mas",13:"tk_menos",14:"tk_multiplicar",15:"tk_division",16:"tk_pa",17:"tk_pc",18:"tk_decimal"},
-productions_: [0,[3,2],[4,2],[4,1],[6,5],[6,2],[9,3],[9,3],[9,3],[9,3],[9,3],[9,3],[9,1]],
+symbols_: {"error":2,"INICIO":3,"LINSTRUCCIONES":4,"EOF":5,"INSTRUCCION":6,"DECLARACION":7,"tk_punto_coma":8,"TIPO":9,"id":10,"tk_igual":11,"LEXPRESION":12,"tk_integer":13,"tk_double":14,"tk_string":15,"tk_char":16,"EXPRESION":17,"E":18,"tk_mas":19,"tk_menos":20,"tk_multiplicar":21,"tk_division":22,"tk_pa":23,"tk_pc":24,"tk_decimal":25,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",8:"tk_punto_coma",10:"id",11:"tk_igual",13:"tk_integer",14:"tk_double",15:"tk_string",16:"tk_char",19:"tk_mas",20:"tk_menos",21:"tk_multiplicar",22:"tk_division",23:"tk_pa",24:"tk_pc",25:"tk_decimal"},
+productions_: [0,[3,2],[4,2],[4,1],[6,2],[7,4],[9,1],[9,1],[9,1],[9,1],[12,2],[12,1],[17,1],[17,1],[18,3],[18,3],[18,3],[18,3],[18,3],[18,3],[18,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -86,10 +86,42 @@ switch (yystate) {
 case 1:
  this.$= new Nodo("INICIO","");
      this.$.agregarHijo($$[$0-1]);
-     return this.$;
-    
+     return this.$;  
 break;
 case 2:
+this.$= new Nodo("LINSTRUCCIONES","");
+                                    this.$.agregarHijo($$[$0-1]);
+                                    var inst =  new Nodo("INSTRUCCION","");
+                                    inst.agregarHijo($$[$0])
+                                    this.$.agregarHijo(inst); 
+break;
+case 3:
+ 
+        // console.log("tengo una declaracion")
+        this.$= new Nodo("INSTRUCCION",""); 
+                         this.$.agregarHijo($$[$0]);
+                     
+break;
+case 4:
+  this.$ = $$[$0-1]
+break;
+case 5:
+ 
+        // console.log("tengo una declaracion")
+    this.$ = new Nodo("DECLARACION","")
+    this.$.agregarHijo($$[$0-3])
+    this.$.agregarHijo(new Nodo($$[$0-2],"identificador"))
+    this.$.agregarHijo($$[$0])
+                                           
+                                             
+break;
+case 6: case 9:
+  this.$ = new Nodo($$[$0],"tipo_dato");
+break;
+case 7: case 8:
+  this.$ = new Nodo($$[$0],"tipo_dato"); 
+break;
+case 10:
 this.$= new Nodo("LEXPRESION","");
                                     this.$.agregarHijo($$[$0-1]);
                                     var expre =  new Nodo("EXPRESION","");
@@ -97,63 +129,61 @@ this.$= new Nodo("LEXPRESION","");
                                     this.$.agregarHijo(expre);
                                 
 break;
-case 3:
+case 11:
  
         this.$= new Nodo("EXPRESION","");
         this.$.agregarHijo($$[$0]);
                
     
 break;
-case 4:
- this.$ = $$[$0-2]
-                                                 
-                                                   
+case 12:
+ this.$ = $$[$0]                            
     
 break;
-case 5:
+case 13:
 console.log("Error sintactico en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);
 break;
-case 6:
+case 14:
  this.$ = new Nodo("+","suma");
                         this.$.agregarHijo($$[$0-2]);
                         this.$.agregarHijo($$[$0]);
                         
 break;
-case 7:
+case 15:
  this.$ = new Nodo("-","resta")
                         this.$.agregarHijo($$[$0-2]);
                         this.$.agregarHijo($$[$0]);
                         
 break;
-case 8:
+case 16:
  this.$ = new Nodo("*","multiplicar")
                         this.$.agregarHijo($$[$0-2]);
                         this.$.agregarHijo($$[$0]);
                         
 break;
-case 9:
+case 17:
  this.$ = new Nodo("/","division")
                         this.$.agregarHijo($$[$0-2]);
                         this.$.agregarHijo($$[$0]);
                         
 break;
-case 10:
+case 18:
  this.$ = $$[$0-1]
                      
                     
 break;
-case 11:
+case 19:
 console.log("Error sintactico en: "+ $$[$0-2] +"ERROR" +$$[$0]+ " en la Linea: " + this._$.first_line + " en la Columna: " + this._$.first_column);
 break;
-case 12:
+case 20:
  this.$ = new Nodo($$[$0],"decimal");
                  
                    
 break;
 }
 },
-table: [{2:$V0,3:1,4:2,6:3,7:$V1},{1:[3]},{2:$V0,5:[1,6],6:7,7:$V1},o($V2,[2,3]),{8:[1,8]},{11:[1,9]},{1:[2,1]},o($V2,[2,2]),{9:10,16:$V3,18:$V4},o($V2,[2,5]),{10:[1,13],12:$V5,13:$V6,14:$V7,15:$V8},{2:[1,19],9:18,16:$V3,18:$V4},o($V9,[2,12]),{11:[1,20]},{9:21,16:$V3,18:$V4},{9:22,16:$V3,18:$V4},{9:23,16:$V3,18:$V4},{9:24,16:$V3,18:$V4},{12:$V5,13:$V6,14:$V7,15:$V8,17:[1,25]},{17:[1,26]},o($V2,[2,4]),o($Va,[2,6],{14:$V7,15:$V8}),o($Va,[2,7],{14:$V7,15:$V8}),o($V9,[2,8]),o($V9,[2,9]),o($V9,[2,10]),o($V9,[2,11])],
-defaultActions: {6:[2,1]},
+table: [{3:1,4:2,6:3,7:4,9:5,13:$V0,14:$V1,15:$V2,16:$V3},{1:[3]},{5:[1,10],6:11,7:4,9:5,13:$V0,14:$V1,15:$V2,16:$V3},o($V4,[2,3]),{8:[1,12]},{10:[1,13]},{10:[2,6]},{10:[2,7]},{10:[2,8]},{10:[2,9]},{1:[2,1]},o($V4,[2,2]),o($V4,[2,4]),{11:[1,14]},{2:$V5,12:15,17:16,18:17,23:$V6,25:$V7},{2:$V5,8:[2,5],17:21,18:17,23:$V6,25:$V7},o($V8,[2,11]),o($V8,[2,12],{19:$V9,20:$Va,21:$Vb,22:$Vc}),o($V8,[2,13]),{2:[1,27],18:26,23:$V6,25:$V7},o($Vd,[2,20]),o($V8,[2,10]),{18:28,23:$V6,25:$V7},{18:29,23:$V6,25:$V7},{18:30,23:$V6,25:$V7},{18:31,23:$V6,25:$V7},{19:$V9,20:$Va,21:$Vb,22:$Vc,24:[1,32]},{24:[1,33]},o($Ve,[2,14],{21:$Vb,22:$Vc}),o($Ve,[2,15],{21:$Vb,22:$Vc}),o($Vd,[2,16]),o($Vd,[2,17]),o($Vd,[2,18]),o($Vd,[2,19])],
+defaultActions: {6:[2,6],7:[2,7],8:[2,8],9:[2,9],10:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -731,38 +761,48 @@ options: {"case-insensitive":true},
 performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0: return 7;
+case 0:  return 'tk_ca';  
 break;
-case 1:  return 18;  
+case 1:  return 'tk_cc';  
 break;
-case 2:  return 8;  
+case 2: return 19; 
 break;
-case 3:  return 10;  
+case 3: return 20;
 break;
-case 4: return 12; 
+case 4: return 21;
 break;
-case 5: return 13;
+case 5: return 22
 break;
-case 6: return 14;
+case 6:  return 23;  
 break;
-case 7: return 15
+case 7:  return 24;  
 break;
-case 8:  return 16;  
+case 8:  return 8;  
 break;
-case 9:  return 17;  
+case 9:  return 11;  
 break;
-case 10:  return 11;  
+case 10:return 13;
 break;
-case 11: /*se ignoran*/ 
+case 11:return 14;
 break;
-case 12:  return 5;   
+case 12:return 16;
 break;
-case 13: console.log('Error Lexico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
+case 13:return 15;
+break;
+case 14:return 10;
+break;
+case 15:  return 25;  
+break;
+case 16: /*se ignoran*/ 
+break;
+case 17:  return 5;   
+break;
+case 18: console.log('Error Lexico: ' + yy_.yytext + ', en la linea: ' + yy_.yylloc.first_line + ', en la columna: ' + yy_.yylloc.first_column); 
 break;
 }
 },
-rules: [/^(?:EXPRESION\b)/i,/^(?:[0-9]+(\.[0-9])?\b)/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:\()/i,/^(?:\))/i,/^(?:;)/i,/^(?:[ \t\r\n\f]+)/i,/^(?:$)/i,/^(?:.)/i],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13],"inclusive":true}}
+rules: [/^(?:\[)/i,/^(?:\])/i,/^(?:\+)/i,/^(?:-)/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:\()/i,/^(?:\))/i,/^(?:;)/i,/^(?:=)/i,/^(?:integer\b)/i,/^(?:double\b)/i,/^(?:char\b)/i,/^(?:string\b)/i,/^(?:([a-zA-Z"_"])[a-z0-9A-Z"_""ñ""Ñ"]*)/i,/^(?:[0-9]+(\.[0-9])?\b)/i,/^(?:[ \t\r\n\f]+)/i,/^(?:$)/i,/^(?:.)/i],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 });
 return lexer;
 })();
